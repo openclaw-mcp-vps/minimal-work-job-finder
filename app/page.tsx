@@ -1,142 +1,141 @@
-export default function Home() {
-  const checkoutUrl = process.env.NEXT_PUBLIC_LS_CHECKOUT_URL || "#";
+import Link from "next/link";
+import { ArrowRight, Brain, ShieldCheck, TimerReset } from "lucide-react";
 
-  const faqs = [
-    {
-      q: "How does the workload score work?",
-      a: "Our AI scans each job description for signals like 'flexible hours', 'async-first', 'autonomous', and 'minimal meetings', then assigns a 1–10 score. Higher means less grind."
-    },
-    {
-      q: "What kinds of jobs are listed?",
-      a: "We focus on software engineering, design, and product roles at remote-friendly companies known for sustainable work cultures."
-    },
-    {
-      q: "Can I cancel anytime?",
-      a: "Yes. Cancel with one click from your Lemon Squeezy billing portal. No questions asked, no hidden fees."
-    }
-  ];
+import { PricingCard } from "@/components/PricingCard";
 
+const FAQ_ITEMS = [
+  {
+    question: "What makes this different from generic job boards?",
+    answer:
+      "Every listing is scored for workload sustainability. We prioritize companies with evidence of reasonable pacing, clear boundaries, and remote-friendly habits while filtering common burnout signals."
+  },
+  {
+    question: "Will this only show junior roles?",
+    answer:
+      "No. The strongest demand comes from senior engineers, product managers, and designers who want impact without 60-hour weeks. Roles span IC and leadership tracks."
+  },
+  {
+    question: "How fast are listings updated?",
+    answer:
+      "The dataset refreshes on demand and also reuses short-term caching to keep results fast. You can force a refresh inside the paid jobs explorer anytime."
+  },
+  {
+    question: "Can I cancel if it is not useful for my search?",
+    answer:
+      "Yes. Subscription management is handled by Stripe hosted checkout and billing settings so you can cancel directly without support tickets."
+  }
+];
+
+export default function HomePage() {
   return (
-    <main className="min-h-screen bg-[#0d1117] text-[#c9d1d9]">
-      {/* Nav */}
-      <nav className="border-b border-[#30363d] px-6 py-4 flex items-center justify-between max-w-5xl mx-auto">
-        <span className="text-[#58a6ff] font-bold text-lg tracking-tight">MinimalWork</span>
-        <a
-          href={checkoutUrl}
-          className="bg-[#58a6ff] text-[#0d1117] text-sm font-semibold px-4 py-2 rounded-md hover:bg-[#79b8ff] transition-colors"
-        >
-          Get Access
-        </a>
-      </nav>
+    <main className="mx-auto flex w-full max-w-6xl flex-col gap-16 px-5 py-10 sm:px-8 lg:py-14">
+      <section className="grid gap-8 rounded-3xl border border-slate-800 bg-slate-900/65 p-7 shadow-2xl shadow-black/20 lg:grid-cols-[1.2fr_0.8fr] lg:p-10">
+        <div>
+          <p className="inline-flex rounded-full border border-cyan-400/40 bg-cyan-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-cyan-200">
+            Burnout-safe job search
+          </p>
+          <h1 className="mt-4 text-4xl font-bold leading-tight text-slate-100 sm:text-5xl">
+            Find Tech Jobs Requiring Minimal Actual Work
+          </h1>
+          <p className="mt-5 max-w-2xl text-lg leading-8 text-slate-300">
+            Minimal Work Job Finder filters out startup chaos and high-pressure environments so you can focus on roles with healthy expectations, better boundaries, and room for real life.
+          </p>
 
-      {/* Hero */}
-      <section className="max-w-3xl mx-auto px-6 pt-24 pb-20 text-center">
-        <span className="inline-block bg-[#161b22] border border-[#30363d] text-[#58a6ff] text-xs font-medium px-3 py-1 rounded-full mb-6">
-          AI-Powered Job Curation
-        </span>
-        <h1 className="text-4xl sm:text-5xl font-extrabold text-white leading-tight mb-6">
-          Tech Jobs That Won&apos;t{" "}
-          <span className="text-[#58a6ff]">Burn You Out</span>
-        </h1>
-        <p className="text-[#8b949e] text-lg mb-10 max-w-xl mx-auto">
-          We scrape thousands of job listings and use AI to score each one for workload intensity. Get a curated feed of roles with flexible hours, async culture, and minimal meetings — updated daily.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
-          <a
-            href={checkoutUrl}
-            className="bg-[#58a6ff] text-[#0d1117] font-bold px-8 py-3 rounded-md hover:bg-[#79b8ff] transition-colors text-base"
-          >
-            Start for $19/mo
-          </a>
-          <a
-            href="#pricing"
-            className="border border-[#30363d] text-[#c9d1d9] font-semibold px-8 py-3 rounded-md hover:border-[#58a6ff] hover:text-[#58a6ff] transition-colors text-base"
-          >
-            See What&apos;s Included
-          </a>
-        </div>
-
-        {/* Social proof */}
-        <div className="mt-12 flex flex-wrap justify-center gap-6 text-sm text-[#8b949e]">
-          <span>✦ 2,400+ jobs scored weekly</span>
-          <span>✦ Async-first filter</span>
-          <span>✦ No-meeting culture badge</span>
-          <span>✦ Remote-only toggle</span>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="bg-[#161b22] border-y border-[#30363d] py-16">
-        <div className="max-w-4xl mx-auto px-6 grid sm:grid-cols-3 gap-8 text-center">
-          {[
-            { step: "01", title: "We Scrape", desc: "Thousands of tech job boards aggregated daily into one place." },
-            { step: "02", title: "AI Scores", desc: "GPT-4 reads each description and assigns a 1–10 workload score." },
-            { step: "03", title: "You Filter", desc: "Browse only the jobs that match your ideal work-life balance." }
-          ].map(({ step, title, desc }) => (
-            <div key={step} className="flex flex-col items-center gap-3">
-              <span className="text-[#58a6ff] text-xs font-bold tracking-widest">{step}</span>
-              <h3 className="text-white font-bold text-lg">{title}</h3>
-              <p className="text-[#8b949e] text-sm">{desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section id="pricing" className="max-w-md mx-auto px-6 py-24 text-center">
-        <h2 className="text-2xl font-extrabold text-white mb-2">Simple Pricing</h2>
-        <p className="text-[#8b949e] text-sm mb-10">One plan. Everything included. Cancel anytime.</p>
-        <div className="bg-[#161b22] border border-[#30363d] rounded-xl p-8 text-left relative">
-          <span className="absolute -top-3 left-1/2 -translate-x-1/2 bg-[#58a6ff] text-[#0d1117] text-xs font-bold px-3 py-1 rounded-full">
-            Most Popular
-          </span>
-          <div className="flex items-end gap-1 mb-1">
-            <span className="text-4xl font-extrabold text-white">$19</span>
-            <span className="text-[#8b949e] mb-1">/month</span>
+          <div className="mt-8 flex flex-wrap gap-3">
+            <Link
+              href="/unlock"
+              className="inline-flex items-center gap-2 rounded-xl bg-cyan-400 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-300"
+            >
+              Get Premium Access
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+            <a
+              href="#how-it-works"
+              className="inline-flex items-center rounded-xl border border-slate-700 px-5 py-3 text-sm font-medium text-slate-200 transition hover:border-cyan-400 hover:text-cyan-300"
+            >
+              See scoring approach
+            </a>
           </div>
-          <p className="text-[#8b949e] text-sm mb-6">Full access to the MinimalWork dashboard</p>
-          <ul className="space-y-3 mb-8">
-            {[
-              "Daily-updated job feed",
-              "AI workload score (1–10) per listing",
-              "Async-first & no-meeting filters",
-              "Remote-only toggle",
-              "Email digest of top picks",
-              "Cancel anytime"
-            ].map((feature) => (
-              <li key={feature} className="flex items-center gap-3 text-sm text-[#c9d1d9]">
-                <span className="text-[#58a6ff] font-bold">✓</span>
-                {feature}
-              </li>
-            ))}
-          </ul>
-          <a
-            href={checkoutUrl}
-            className="block w-full bg-[#58a6ff] text-[#0d1117] font-bold py-3 rounded-md text-center hover:bg-[#79b8ff] transition-colors"
-          >
-            Get Access — $19/mo
-          </a>
-          <p className="text-center text-xs text-[#8b949e] mt-3">Secured by Lemon Squeezy</p>
+
+          <p className="mt-6 text-sm text-slate-400">
+            Built for experienced developers, designers, and product managers who want sustainable growth instead of permanent firefighting.
+          </p>
         </div>
+
+        <PricingCard />
       </section>
 
-      {/* FAQ */}
-      <section className="max-w-2xl mx-auto px-6 pb-24">
-        <h2 className="text-2xl font-extrabold text-white text-center mb-10">FAQ</h2>
-        <div className="space-y-6">
-          {faqs.map(({ q, a }) => (
-            <div key={q} className="border border-[#30363d] rounded-lg p-6">
-              <h3 className="text-white font-semibold mb-2">{q}</h3>
-              <p className="text-[#8b949e] text-sm leading-relaxed">{a}</p>
-            </div>
+      <section className="grid gap-5 md:grid-cols-3">
+        <article className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
+          <TimerReset className="h-5 w-5 text-cyan-300" />
+          <h2 className="mt-3 text-xl font-semibold text-slate-100">The Problem</h2>
+          <p className="mt-2 text-sm leading-6 text-slate-300">
+            Too many "remote" jobs still expect instant replies, endless meetings, and after-hours fire drills. Traditional boards do not measure that risk.
+          </p>
+        </article>
+
+        <article className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
+          <ShieldCheck className="h-5 w-5 text-emerald-300" />
+          <h2 className="mt-3 text-xl font-semibold text-slate-100">The Solution</h2>
+          <p className="mt-2 text-sm leading-6 text-slate-300">
+            We scrape vetted company boards, score each listing for workload signals, and suppress roles with strong burnout indicators before you spend time applying.
+          </p>
+        </article>
+
+        <article className="rounded-2xl border border-slate-800 bg-slate-900/70 p-5">
+          <Brain className="h-5 w-5 text-violet-300" />
+          <h2 className="mt-3 text-xl font-semibold text-slate-100">Why It Works</h2>
+          <p className="mt-2 text-sm leading-6 text-slate-300">
+            The ranking model combines company baseline quality, posting language, and pressure keywords so you can immediately prioritize roles with healthier odds.
+          </p>
+        </article>
+      </section>
+
+      <section id="how-it-works" className="rounded-3xl border border-slate-800 bg-slate-900/65 p-7 lg:p-10">
+        <h2 className="text-3xl font-semibold text-slate-100">How the work-life scoring works</h2>
+        <div className="mt-5 grid gap-4 md:grid-cols-2">
+          <div className="rounded-xl border border-slate-700 bg-slate-950/50 p-4">
+            <h3 className="text-lg font-semibold text-emerald-300">Signals that raise a score</h3>
+            <p className="mt-2 text-sm leading-6 text-slate-300">
+              Explicit mentions of flexible hours, async collaboration, sustainable pace, deep-work blocks, remote-first operations, and realistic staffing.
+            </p>
+          </div>
+          <div className="rounded-xl border border-slate-700 bg-slate-950/50 p-4">
+            <h3 className="text-lg font-semibold text-rose-300">Signals that lower a score</h3>
+            <p className="mt-2 text-sm leading-6 text-slate-300">
+              Terms like "always-on", "hustle", "high-intensity", aggressive growth pressure, broad role inflation, and frequent on-call language.
+            </p>
+          </div>
+        </div>
+        <p className="mt-5 text-sm text-slate-400">
+          Premium members can tune score threshold, force a fresh scrape, save searches, and keep a shortlist inside the dashboard.
+        </p>
+      </section>
+
+      <section className="rounded-3xl border border-slate-800 bg-slate-900/65 p-7 lg:p-10">
+        <h2 className="text-3xl font-semibold text-slate-100">FAQ</h2>
+        <div className="mt-5 space-y-4">
+          {FAQ_ITEMS.map((item) => (
+            <article key={item.question} className="rounded-xl border border-slate-700 bg-slate-950/50 p-4">
+              <h3 className="text-lg font-semibold text-slate-100">{item.question}</h3>
+              <p className="mt-2 text-sm leading-6 text-slate-300">{item.answer}</p>
+            </article>
           ))}
         </div>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-[#30363d] py-8 text-center text-xs text-[#8b949e]">
-        <p>© {new Date().getFullYear()} MinimalWork. Built for engineers who value their time.</p>
-      </footer>
+      <section className="rounded-3xl border border-cyan-400/25 bg-cyan-400/10 p-6 text-center">
+        <h2 className="text-2xl font-semibold text-cyan-100">Stop spending your evenings recovering from your workday</h2>
+        <p className="mt-3 text-sm text-cyan-50/90">
+          Join Minimal Work Job Finder and search roles built for long-term performance and mental sustainability.
+        </p>
+        <Link
+          href="/unlock"
+          className="mt-5 inline-flex items-center rounded-xl bg-cyan-300 px-5 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-200"
+        >
+          Start with premium filters
+        </Link>
+      </section>
     </main>
   );
 }
